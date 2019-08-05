@@ -1,6 +1,8 @@
 package com.hashimshafiq.pintrestdemo.views;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +15,15 @@ import com.hashimshafiq.asyncimageloader.models.ServiceContentTypeDownload;
 import com.hashimshafiq.asyncimageloader.models.ServiceImageDownload;
 import com.hashimshafiq.asyncimageloader.utilities.ContentTypeServiceDownload;
 import com.hashimshafiq.pintrestdemo.R;
+import com.hashimshafiq.pintrestdemo.implementations.DetailPresenterImplementation;
+import com.hashimshafiq.pintrestdemo.interfaces.DetailPresenter;
+import com.hashimshafiq.pintrestdemo.interfaces.DetailView;
+import com.hashimshafiq.pintrestdemo.interfaces.PinListView;
 import kotlin.BuilderInference;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements DetailView {
+
+    DetailPresenter detailPresenter;
 
     @BindView(R.id.image)
     ImageView mPinImage;
@@ -27,88 +35,55 @@ public class DetailActivity extends AppCompatActivity {
     TextView mNameText;
 
     String name,profile,pinImage;
-    private ContentTypeServiceDownload mProvider;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-        mProvider = ContentTypeServiceDownload.Companion.getInstance();
+        detailPresenter = new DetailPresenterImplementation(this,getApplicationContext());
+
 
         if(getIntent().hasExtra("name") && getIntent().hasExtra("profile") && getIntent().hasExtra("pinImage")){
             name = getIntent().getStringExtra("name");
             profile = getIntent().getStringExtra("profile");
             pinImage = getIntent().getStringExtra("pinImage");
 
-            bindViews();
+
         }
+
+        detailPresenter.fetchPinImage(pinImage);
+        detailPresenter.fetchProfile(name,profile);
+
+
     }
 
     @OnClick(R.id.back) void onClickBack(){
         finish();
     }
 
-    private void bindViews() {
+
+
+    @Override
+    public void displayPinImage(Bitmap image) {
+        mPinImage.setImageBitmap(image);
+    }
+
+    @Override
+    public void displayPinImage(int image) {
+        mPinImage.setImageResource(image);
+    }
+
+    @Override
+    public void displayProfile(String name, Bitmap image) {
+        mProfileImage.setImageBitmap(image);
         mNameText.setText(name);
+    }
 
-        ServiceContentTypeDownload mDataTypeImageCancel = new ServiceImageDownload(pinImage, new ContentServiceObserver()
-        {
-            @Override
-            public void onStart(ServiceContentTypeDownload mDownloadDataType)
-            {
-                mPinImage.setImageResource(R.drawable.place_holder);
-            }
-
-            @SuppressLint("DefaultLocale")
-            @Override
-            public void onSuccess(ServiceContentTypeDownload mDownloadDataType)
-            {
-                mPinImage.setImageBitmap(((ServiceImageDownload) mDownloadDataType).getImageBitmap());
-            }
-
-            @Override
-            public void onFailure(ServiceContentTypeDownload mDownloadDataType, int statusCode, byte[] errorResponse, Throwable e)
-            {
-                mPinImage.setImageResource(R.drawable.place_holder);
-            }
-
-            @Override
-            public void onRetry(ServiceContentTypeDownload mDownloadDataType, int retryNo)
-            {
-
-            }
-        });
-        mProvider.getRequest(mDataTypeImageCancel);
-
-        ServiceContentTypeDownload mDataTypeImageCancel1 = new ServiceImageDownload(profile, new ContentServiceObserver()
-        {
-            @Override
-            public void onStart(ServiceContentTypeDownload mDownloadDataType)
-            {
-
-            }
-
-            @SuppressLint("DefaultLocale")
-            @Override
-            public void onSuccess(ServiceContentTypeDownload mDownloadDataType)
-            {
-                mProfileImage.setImageBitmap(((ServiceImageDownload) mDownloadDataType).getImageBitmap());
-            }
-
-            @Override
-            public void onFailure(ServiceContentTypeDownload mDownloadDataType, int statusCode, byte[] errorResponse, Throwable e)
-            {
-
-            }
-
-            @Override
-            public void onRetry(ServiceContentTypeDownload mDownloadDataType, int retryNo)
-            {
-
-            }
-        });
-        mProvider.getRequest(mDataTypeImageCancel1);
-
+    @Override
+    public void displayProfile(String name, int image) {
+        mProfileImage.setImageResource(image);
+        mNameText.setText(name);
     }
 }
