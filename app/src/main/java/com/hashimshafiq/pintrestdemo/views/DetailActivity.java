@@ -14,12 +14,13 @@ import com.hashimshafiq.pintrestdemo.interfaces.DetailPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailView;
 import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
+import com.hashimshafiq.pintrestdemo.utilities.connection_monitor.NetworkSensingActivity;
 import dagger.android.AndroidInjection;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class DetailActivity extends AppCompatActivity implements DetailView {
+public class DetailActivity extends NetworkSensingActivity implements DetailView {
 
     @Inject
     DetailPresenter detailPresenter;

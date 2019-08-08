@@ -19,12 +19,13 @@ import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
 import com.hashimshafiq.pintrestdemo.utilities.SpacesItemDecoration;
+import com.hashimshafiq.pintrestdemo.utilities.connection_monitor.NetworkSensingActivity;
 import dagger.android.AndroidInjection;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class PinListActivity extends AppCompatActivity implements PinClickListener, PinListView {
+public class PinListActivity extends NetworkSensingActivity implements PinClickListener, PinListView {
 
     @BindView(R.id.listView)
     RecyclerView mRecyclerView;
