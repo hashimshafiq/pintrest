@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.hashimshafiq.pintrestdemo.R;
-import com.hashimshafiq.pintrestdemo.listeners.PinClickListerner;
+import com.hashimshafiq.pintrestdemo.listeners.PinClickListener;
 
 public class PinViewHolder extends RecyclerView.ViewHolder {
 
@@ -22,12 +22,12 @@ public class PinViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.heart)
     public ImageView mHeartImage;
 
-    PinClickListerner mPinClickListener;
+    private PinClickListener mPinClickListener;
 
-    public PinViewHolder(@NonNull View itemView, PinClickListerner pinClickListerner) {
+    public PinViewHolder(@NonNull View itemView, PinClickListener pinClickListener) {
         super(itemView);
         ButterKnife.bind(this,itemView);
-        this.mPinClickListener = pinClickListerner;
+        this.mPinClickListener = pinClickListener;
 
     }
 

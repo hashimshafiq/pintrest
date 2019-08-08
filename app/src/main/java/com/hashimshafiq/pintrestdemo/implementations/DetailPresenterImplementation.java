@@ -1,7 +1,6 @@
 package com.hashimshafiq.pintrestdemo.implementations;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import com.hashimshafiq.asyncimageloader.callback.ContentServiceObserver;
 import com.hashimshafiq.asyncimageloader.models.ServiceContentTypeDownload;
@@ -16,17 +15,15 @@ import javax.inject.Inject;
 public class DetailPresenterImplementation implements DetailPresenter {
 
     private DetailView detailView;
-    private Context context;
     private ContentTypeServiceDownload mProvider;
 
     @Inject
     Drawable placeHolderImage;
 
 
-    public DetailPresenterImplementation(Context context) {
+    public DetailPresenterImplementation() {
         this.detailView = null;
-        this.context = context;
-        this.mProvider = ContentTypeServiceDownload.Companion.getInstance();
+        mProvider = ContentTypeServiceDownload.Companion.getInstance();
     }
 
 

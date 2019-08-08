@@ -25,8 +25,8 @@ public class DetailModule {
 
     @Provides
     @Singleton
-    DetailPresenter provideDetailPresenter(Application application){
-        return new DetailPresenterImplementation(application);
+    DetailPresenter provideDetailPresenter(){
+        return new DetailPresenterImplementation();
     }
 
     @Provides
@@ -34,5 +34,7 @@ public class DetailModule {
     List<String> provideStringList(){
         return new ArrayList<>();
     }
+
+
 
 }

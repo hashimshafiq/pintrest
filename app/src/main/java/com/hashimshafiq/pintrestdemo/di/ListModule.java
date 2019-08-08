@@ -58,4 +58,7 @@ public class ListModule {
     Drawable providePlaceHolderImage(Application application){
         return ContextCompat.getDrawable(application, R.drawable.place_holder);
     }
+
+
+
 }

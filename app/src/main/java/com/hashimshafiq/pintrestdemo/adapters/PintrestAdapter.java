@@ -11,7 +11,7 @@ import com.hashimshafiq.asyncimageloader.models.ServiceContentTypeDownload;
 import com.hashimshafiq.asyncimageloader.models.ServiceImageDownload;
 import com.hashimshafiq.asyncimageloader.utilities.ContentTypeServiceDownload;
 import com.hashimshafiq.pintrestdemo.R;
-import com.hashimshafiq.pintrestdemo.listeners.PinClickListerner;
+import com.hashimshafiq.pintrestdemo.listeners.PinClickListener;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.viewholders.PinViewHolder;
 
@@ -22,12 +22,12 @@ public class PintrestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private ContentTypeServiceDownload mProvider = null;
     private List<PinListResponse> mList;
-    private PinClickListerner mPinClickListener;
+    private PinClickListener mPinClickListener;
 
-    public PintrestAdapter(List<PinListResponse> list,PinClickListerner pinClickListerner ){
+    public PintrestAdapter(List<PinListResponse> list, PinClickListener pinClickListener){
         mList = list;
         mProvider = ContentTypeServiceDownload.Companion.getInstance();
-        this.mPinClickListener = pinClickListerner;
+        this.mPinClickListener = pinClickListener;
     }
 
     public PintrestAdapter(){
@@ -36,7 +36,7 @@ public class PintrestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mList = new ArrayList<>();
     }
 
-    public void setPinClickListener(PinClickListerner listener){
+    public void setPinClickListener(PinClickListener listener){
         this.mPinClickListener = listener;
     }
 

@@ -13,6 +13,7 @@ import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.utilities.CONSTANTS;
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,9 +29,9 @@ public class PinListPresenterImplementation implements PinListPresenter {
 
     public PinListPresenterImplementation(Context context){
         this.listingView = null;
-        this.context = context;
-        this.mProvider = ContentTypeServiceDownload.Companion.getInstance();
+        mProvider = ContentTypeServiceDownload.Companion.getInstance();
         pins = new ArrayList<>();
+        this.context = context;
     }
 
 

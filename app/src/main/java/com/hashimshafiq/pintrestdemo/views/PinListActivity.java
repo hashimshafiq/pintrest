@@ -14,7 +14,7 @@ import com.hashimshafiq.pintrestdemo.R;
 import com.hashimshafiq.pintrestdemo.adapters.PintrestAdapter;
 import com.hashimshafiq.pintrestdemo.interfaces.PinListPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.PinListView;
-import com.hashimshafiq.pintrestdemo.listeners.PinClickListerner;
+import com.hashimshafiq.pintrestdemo.listeners.PinClickListener;
 import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
@@ -24,7 +24,7 @@ import dagger.android.AndroidInjection;
 import javax.inject.Inject;
 import java.util.List;
 
-public class PinListActivity extends AppCompatActivity implements PinClickListerner, PinListView {
+public class PinListActivity extends AppCompatActivity implements PinClickListener, PinListView {
 
     @BindView(R.id.listView)
     RecyclerView mRecyclerView;
