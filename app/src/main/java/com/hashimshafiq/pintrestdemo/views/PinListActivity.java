@@ -2,10 +2,10 @@ package com.hashimshafiq.pintrestdemo.views;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -21,11 +21,13 @@ import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
 import com.hashimshafiq.pintrestdemo.utilities.SpacesItemDecoration;
+import dagger.android.support.DaggerAppCompatActivity;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PinListActivity extends AppCompatActivity implements PinClickListerner, PinListView {
+public class PinListActivity extends DaggerAppCompatActivity implements PinClickListerner, PinListView {
 
     @BindView(R.id.listView)
     RecyclerView mRecyclerView;
@@ -33,9 +35,18 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
     @BindView(R.id.progress)
     ProgressBar mProgressBar;
 
-    private List<PinListResponse> mList;
-    private PintrestAdapter adapter;
+    @Inject
+    Drawable heart;
+
+    @Inject
+    List<PinListResponse> mList;
+
+    @Inject
+    PintrestAdapter adapter;
+
+
     private PinListPresenter pinListPresenter;
+
 
 
 
@@ -46,11 +57,11 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_list);
         ButterKnife.bind(this);
-        mList = new ArrayList<>();
+        //mList = new ArrayList<>();
         mProgressBar.setVisibility(View.VISIBLE);
         pinListPresenter = new PinListPresenterImplementation(getApplicationContext(),this);
 
-        adapter = new PintrestAdapter(mList,this);
+        //adapter = new PintrestAdapter(mList,this);
         mRecyclerView.setAdapter(adapter);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
@@ -68,20 +79,20 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
         UserResponse userResponse = mList.get(position).getUser();
 
         Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
-        intent.putExtra("profile",userResponse.getProfileImageResponse().getSmall());
-        intent.putExtra("pinImage",imageUrlsResponse.getFull());
-        intent.putExtra("name",userResponse.getName());
+        intent.putExtra("user",userResponse);
+        intent.putExtra("image",imageUrlsResponse);
 
         startActivity(intent);
     }
 
     @Override
     public void onClickHeartIcon(int position) {
-        Toast.makeText(getApplicationContext(),"Heart Clicked",Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public void displayPins(List<PinListResponse> pinListResponses) {
+
         mList.addAll(pinListResponses);
         adapter.notifyDataSetChanged();
         mProgressBar.setVisibility(View.INVISIBLE);
