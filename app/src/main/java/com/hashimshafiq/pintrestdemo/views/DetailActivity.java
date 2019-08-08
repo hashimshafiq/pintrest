@@ -15,13 +15,6 @@ import com.hashimshafiq.pintrestdemo.interfaces.DetailPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailView;
 import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +36,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     ImageUrlsResponse pinImages= null;
     List<String> pinImagesList;
     List<String> profileImagesList;
-    private Observable<List<String>> profileObservable;
-    private int counter = 0;
-    private int counter1 = 0;
-    private Observable<String> pinObservable;
+
 
 
     @Override
@@ -70,9 +60,6 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
             return;
         }
 
-        Toast.makeText(getApplicationContext(),"lol",Toast.LENGTH_LONG).show();
-
-
 
 
         convertPinImagesToList(pinImages);
@@ -85,88 +72,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         detailPresenter.fetchProfile(user.getName(),profileImagesList.get(0));
         detailPresenter.fetchProfile(user.getName(),profileImagesList.get(1));
         detailPresenter.fetchProfile(user.getName(),profileImagesList.get(2));
-
-//        setProfileObservable();
-//        setPinObservable();
-//
-//        setProfileSubscriber();
-//        setPinSubscriber();
-
-
     }
-
-    private void setProfileObservable() {
-        profileObservable = Observable.fromCallable(() -> profileImagesList);
-    }
-
-    private void setProfileSubscriber(){
-        profileObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<String>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<String> strings) {
-                        detailPresenter.fetchProfile("hashim",strings.get(counter));
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        if(counter>profileImagesList.size())
-                            counter = 0;
-                        counter++;
-                    }
-                });
-    }
-
-    private void setPinObservable() {
-        pinObservable = Observable.create(emitter -> {
-            emitter.onNext(pinImagesList.get(0));
-            emitter.onNext(pinImagesList.get(1));
-            emitter.onNext(pinImagesList.get(2));
-
-            emitter.onComplete();
-        });
-    }
-
-    private void setPinSubscriber(){
-        pinObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        detailPresenter.fetchPinImage(s);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-
 
     private void convertUserImagesToList(UserResponse userResponse){
         profileImagesList.add(userResponse.getProfileImageResponse().getSmall());

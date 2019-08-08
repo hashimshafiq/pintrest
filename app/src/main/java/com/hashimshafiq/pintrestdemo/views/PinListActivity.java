@@ -2,7 +2,6 @@ package com.hashimshafiq.pintrestdemo.views;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -21,35 +20,20 @@ import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
 import com.hashimshafiq.pintrestdemo.utilities.SpacesItemDecoration;
-import dagger.android.support.DaggerAppCompatActivity;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PinListActivity extends DaggerAppCompatActivity implements PinClickListerner, PinListView {
+public class PinListActivity extends AppCompatActivity implements PinClickListerner, PinListView {
 
     @BindView(R.id.listView)
     RecyclerView mRecyclerView;
 
     @BindView(R.id.progress)
     ProgressBar mProgressBar;
-
-    @Inject
-    Drawable heart;
-
-    @Inject
     List<PinListResponse> mList;
-
-    @Inject
     PintrestAdapter adapter;
-
-
     private PinListPresenter pinListPresenter;
-
-
-
-
 
 
     @Override
@@ -57,11 +41,12 @@ public class PinListActivity extends DaggerAppCompatActivity implements PinClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_list);
         ButterKnife.bind(this);
-        //mList = new ArrayList<>();
+
+        mList = new ArrayList<>();
         mProgressBar.setVisibility(View.VISIBLE);
         pinListPresenter = new PinListPresenterImplementation(getApplicationContext(),this);
 
-        //adapter = new PintrestAdapter(mList,this);
+        adapter = new PintrestAdapter(mList,this);
         mRecyclerView.setAdapter(adapter);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
