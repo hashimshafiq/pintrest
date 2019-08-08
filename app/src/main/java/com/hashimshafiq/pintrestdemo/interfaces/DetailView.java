@@ -1,12 +1,8 @@
 package com.hashimshafiq.pintrestdemo.interfaces;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+public interface DetailView<T> {
 
-public interface DetailView {
+    void displayPinImage(T image);
+    void displayProfile(String name,T image);
 
-    void displayPinImage(Bitmap image);
-    void displayPinImage(Drawable image);
-    void displayProfile(String name,Bitmap image);
-    void displayProfile(String name,Drawable image);
 }

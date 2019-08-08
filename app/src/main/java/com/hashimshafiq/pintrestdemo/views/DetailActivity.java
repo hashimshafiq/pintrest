@@ -91,25 +91,24 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         finish();
     }
 
+
     @Override
-    public void displayPinImage(Bitmap image) {
-        mPinImage.setImageBitmap(image);
+    public void displayPinImage(Object image) {
+        if(image instanceof Drawable)
+            mPinImage.setImageDrawable((Drawable) image);
+        else if(image instanceof Bitmap)
+            mPinImage.setImageBitmap((Bitmap) image);
     }
 
     @Override
-    public void displayPinImage(Drawable image) {
-        mPinImage.setImageDrawable(image);
-    }
+    public void displayProfile(String name, Object image) {
+        if(image instanceof Drawable)
+            mProfileImage.setImageDrawable((Drawable) image);
+        else if(image instanceof Bitmap)
+            mProfileImage.setImageBitmap((Bitmap) image);
 
-    @Override
-    public void displayProfile(String name, Bitmap image) {
-        mProfileImage.setImageBitmap(image);
         mNameText.setText(name);
     }
 
-    @Override
-    public void displayProfile(String name, Drawable image) {
-        mProfileImage.setImageDrawable(image);
-        mNameText.setText(name);
-    }
+
 }

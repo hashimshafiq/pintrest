@@ -9,6 +9,7 @@ import com.hashimshafiq.asyncimageloader.models.ServiceImageDownload;
 import com.hashimshafiq.asyncimageloader.utilities.ContentTypeServiceDownload;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailView;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 
@@ -34,23 +35,23 @@ public class DetailPresenterImplementation implements DetailPresenter {
 
             ServiceContentTypeDownload serviceImageDownload = new ServiceImageDownload(imageURL, new ContentServiceObserver() {
                 @Override
-                public void onStart(ServiceContentTypeDownload mDownloadDataType) {
+                public void onStart(@NotNull ServiceContentTypeDownload mDownloadDataType) {
                     detailView.displayPinImage(placeHolderImage);
                 }
 
                 @SuppressLint("DefaultLocale")
                 @Override
-                public void onSuccess(ServiceContentTypeDownload mDownloadDataType) {
+                public void onSuccess(@NotNull ServiceContentTypeDownload mDownloadDataType) {
                     detailView.displayPinImage(((ServiceImageDownload) mDownloadDataType).getImageBitmap());
                 }
 
                 @Override
-                public void onFailure(ServiceContentTypeDownload mDownloadDataType, int statusCode, byte[] errorResponse, Throwable e) {
+                public void onFailure(@NotNull ServiceContentTypeDownload mDownloadDataType, int statusCode, @NotNull byte[] errorResponse, Throwable e) {
                     detailView.displayPinImage(placeHolderImage);
                 }
 
                 @Override
-                public void onRetry(ServiceContentTypeDownload mDownloadDataType, int retryNo) {
+                public void onRetry(@NotNull ServiceContentTypeDownload mDownloadDataType, int retryNo) {
 
                 }
             });
@@ -65,23 +66,23 @@ public class DetailPresenterImplementation implements DetailPresenter {
     public void fetchProfile(String name, String imageURL) {
         ServiceContentTypeDownload serviceImageDownload = new ServiceImageDownload(imageURL, new ContentServiceObserver() {
             @Override
-            public void onStart(ServiceContentTypeDownload mDownloadDataType) {
+            public void onStart(@NotNull ServiceContentTypeDownload mDownloadDataType) {
                 detailView.displayProfile(name,placeHolderImage);
             }
 
             @SuppressLint("DefaultLocale")
             @Override
-            public void onSuccess(ServiceContentTypeDownload mDownloadDataType) {
+            public void onSuccess(@NotNull ServiceContentTypeDownload mDownloadDataType) {
                 detailView.displayProfile(name,((ServiceImageDownload) mDownloadDataType).getImageBitmap());
             }
 
             @Override
-            public void onFailure(ServiceContentTypeDownload mDownloadDataType, int statusCode, byte[] errorResponse, Throwable e) {
+            public void onFailure(@NotNull ServiceContentTypeDownload mDownloadDataType, int statusCode, @NotNull byte[] errorResponse, @NotNull Throwable e) {
                 detailView.displayProfile(name,placeHolderImage);
             }
 
             @Override
-            public void onRetry(ServiceContentTypeDownload mDownloadDataType, int retryNo) {
+            public void onRetry(@NotNull ServiceContentTypeDownload mDownloadDataType, int retryNo) {
 
             }
         });

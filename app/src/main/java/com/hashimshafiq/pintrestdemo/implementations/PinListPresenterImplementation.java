@@ -2,7 +2,6 @@ package com.hashimshafiq.pintrestdemo.implementations;
 
 import android.content.Context;
 import android.os.Handler;
-import android.widget.ListView;
 import com.google.gson.Gson;
 import com.hashimshafiq.asyncimageloader.callback.ContentServiceObserver;
 import com.hashimshafiq.asyncimageloader.models.ServiceContentTypeDownload;
@@ -12,6 +11,7 @@ import com.hashimshafiq.pintrestdemo.interfaces.PinListPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.PinListView;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.utilities.CONSTANTS;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -40,13 +40,13 @@ public class PinListPresenterImplementation implements PinListPresenter {
         ServiceContentTypeDownload mDataTypeJson = new ServiceJsonDownload(CONSTANTS.API_URL, new ContentServiceObserver()
         {
             @Override
-            public void onStart(ServiceContentTypeDownload mDownloadDataType)
+            public void onStart(@NotNull ServiceContentTypeDownload mDownloadDataType)
             {
 
             }
 
             @Override
-            public void onSuccess(final ServiceContentTypeDownload mDownloadDataType)
+            public void onSuccess(@NotNull final ServiceContentTypeDownload mDownloadDataType)
             {
                 String response = new String(mDownloadDataType.getData(), StandardCharsets.UTF_8);
                 PinListResponse[] pinListResponses = new Gson().fromJson(response, PinListResponse[].class);
@@ -67,12 +67,12 @@ public class PinListPresenterImplementation implements PinListPresenter {
             }
 
             @Override
-            public void onFailure(ServiceContentTypeDownload mDownloadDataType, int statusCode, byte[] errorResponse, Throwable e)
+            public void onFailure(@NotNull ServiceContentTypeDownload mDownloadDataType, int statusCode, @NotNull byte[] errorResponse, @NotNull Throwable e)
             {
             }
 
             @Override
-            public void onRetry(ServiceContentTypeDownload mDownloadDataType, int retryNo)
+            public void onRetry(@NotNull ServiceContentTypeDownload mDownloadDataType, int retryNo)
             {
 
             }
