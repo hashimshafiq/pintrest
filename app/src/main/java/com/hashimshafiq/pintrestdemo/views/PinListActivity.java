@@ -20,7 +20,9 @@ import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
 import com.hashimshafiq.pintrestdemo.utilities.SpacesItemDecoration;
+import dagger.android.AndroidInjection;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
 
     @BindView(R.id.progress)
     ProgressBar mProgressBar;
+
+    @Inject
     List<PinListResponse> mList;
     PintrestAdapter adapter;
     private PinListPresenter pinListPresenter;
@@ -41,8 +45,8 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_list);
         ButterKnife.bind(this);
-
-        mList = new ArrayList<>();
+        AndroidInjection.inject(this);
+        //mList = new ArrayList<>();
         mProgressBar.setVisibility(View.VISIBLE);
         pinListPresenter = new PinListPresenterImplementation(getApplicationContext(),this);
 
