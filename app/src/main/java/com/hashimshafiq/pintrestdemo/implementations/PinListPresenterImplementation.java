@@ -25,21 +25,13 @@ public class PinListPresenterImplementation implements PinListPresenter {
     private ContentTypeServiceDownload mProvider;
     private ArrayList<PinListResponse> pins;
 
-    public PinListPresenterImplementation(Context context,PinListView listingView) {
-        this.listingView = listingView;
+
+    public PinListPresenterImplementation(Context context){
+        this.listingView = null;
         this.context = context;
         this.mProvider = ContentTypeServiceDownload.Companion.getInstance();
         pins = new ArrayList<>();
     }
-
-    public PinListPresenterImplementation(){
-        this.listingView = null;
-        this.context = null;
-        this.mProvider = ContentTypeServiceDownload.Companion.getInstance();
-        pins = new ArrayList<>();
-
-    }
-
 
 
     @Override
@@ -96,10 +88,6 @@ public class PinListPresenterImplementation implements PinListPresenter {
 
 
 
-    @Override
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
 
 }

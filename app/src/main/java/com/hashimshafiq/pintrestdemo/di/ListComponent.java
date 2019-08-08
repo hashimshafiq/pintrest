@@ -10,7 +10,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = {AndroidSupportInjectionModule.class, ActivityModule.class,ListModule.class
+@Component(modules = {AndroidSupportInjectionModule.class,
+        ActivityModule.class,
+        ListModule.class,
+        DetailModule.class,
 
 })
 public interface ListComponent {
@@ -22,6 +25,9 @@ public interface ListComponent {
 
         @BindsInstance
         Builder listModule(ListModule listModule);
+
+        @BindsInstance
+        Builder detailModule(DetailModule detailModule);
 
 
 

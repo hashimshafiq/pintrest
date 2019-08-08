@@ -1,26 +1,27 @@
 package com.hashimshafiq.pintrestdemo.views;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.hashimshafiq.pintrestdemo.R;
-import com.hashimshafiq.pintrestdemo.implementations.DetailPresenterImplementation;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailView;
 import com.hashimshafiq.pintrestdemo.models.ImageUrlsResponse;
 import com.hashimshafiq.pintrestdemo.models.UserResponse;
+import dagger.android.AndroidInjection;
 
-import java.util.ArrayList;
+import javax.inject.Inject;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements DetailView {
 
+    @Inject
     DetailPresenter detailPresenter;
 
     @BindView(R.id.image)
@@ -34,7 +35,11 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
     UserResponse user = null;
     ImageUrlsResponse pinImages= null;
+
+    @Inject
     List<String> pinImagesList;
+
+    @Inject
     List<String> profileImagesList;
 
 
@@ -44,16 +49,11 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-        detailPresenter = new DetailPresenterImplementation(this,getApplicationContext());
-        pinImagesList = new ArrayList<>();
-        profileImagesList = new ArrayList<>();
-
+        AndroidInjection.inject(this);
+        detailPresenter.setDetailView(this);
         if(getIntent().hasExtra("user") && getIntent().hasExtra("image")){
-
             user = getIntent().getParcelableExtra("user");
             pinImages = getIntent().getParcelableExtra("image");
-
-
         }
 
         if(user==null || pinImages==null){
@@ -97,8 +97,8 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     }
 
     @Override
-    public void displayPinImage(int image) {
-        mPinImage.setImageResource(image);
+    public void displayPinImage(Drawable image) {
+        mPinImage.setImageDrawable(image);
     }
 
     @Override
@@ -108,8 +108,8 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     }
 
     @Override
-    public void displayProfile(String name, int image) {
-        mProfileImage.setImageResource(image);
+    public void displayProfile(String name, Drawable image) {
+        mProfileImage.setImageDrawable(image);
         mNameText.setText(name);
     }
 }

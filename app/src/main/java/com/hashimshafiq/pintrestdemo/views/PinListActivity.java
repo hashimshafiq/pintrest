@@ -56,7 +56,6 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
         AndroidInjection.inject(this);
         mProgressBar.setVisibility(View.VISIBLE);
         adapter.setPinClickListener(this);
-        pinListPresenter.setContext(getApplicationContext());
         pinListPresenter.setListingView(this);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(manager);

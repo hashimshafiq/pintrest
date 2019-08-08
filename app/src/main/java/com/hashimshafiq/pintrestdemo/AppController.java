@@ -2,6 +2,7 @@ package com.hashimshafiq.pintrestdemo;
 
 import android.app.Application;
 import com.hashimshafiq.pintrestdemo.di.DaggerListComponent;
+import com.hashimshafiq.pintrestdemo.di.DetailModule;
 import com.hashimshafiq.pintrestdemo.di.ListModule;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -19,7 +20,7 @@ public class AppController extends Application implements HasAndroidInjector {
     @Override
     public void onCreate() {
         super.onCreate();
-        DaggerListComponent.builder().application(this).listModule(new ListModule()).build().inject(this);
+        DaggerListComponent.builder().application(this).listModule(new ListModule()).detailModule(new DetailModule()).build().inject(this);
 
     }
 

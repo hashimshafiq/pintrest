@@ -1,6 +1,10 @@
 package com.hashimshafiq.pintrestdemo.di;
 
+import android.app.Application;
+import android.graphics.drawable.Drawable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import com.hashimshafiq.pintrestdemo.R;
 import com.hashimshafiq.pintrestdemo.adapters.PintrestAdapter;
 import com.hashimshafiq.pintrestdemo.implementations.PinListPresenterImplementation;
 import com.hashimshafiq.pintrestdemo.interfaces.PinListPresenter;
@@ -45,7 +49,13 @@ public class ListModule {
 
     @Provides
     @Singleton
-    PinListPresenter providePinListPresenter(){
-        return new PinListPresenterImplementation();
+    PinListPresenter providePinListPresenter(Application application){
+        return new PinListPresenterImplementation(application);
+    }
+
+    @Provides
+    @Singleton
+    Drawable providePlaceHolderImage(Application application){
+        return ContextCompat.getDrawable(application, R.drawable.place_holder);
     }
 }

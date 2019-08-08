@@ -6,5 +6,5 @@ public interface PinListPresenter {
 
     void fetchPins();
     void setListingView(PinListView listView);
-    void setContext(Context context);
+
 }

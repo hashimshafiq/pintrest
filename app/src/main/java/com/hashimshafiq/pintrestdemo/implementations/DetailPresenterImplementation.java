@@ -2,13 +2,15 @@ package com.hashimshafiq.pintrestdemo.implementations;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import com.hashimshafiq.asyncimageloader.callback.ContentServiceObserver;
 import com.hashimshafiq.asyncimageloader.models.ServiceContentTypeDownload;
 import com.hashimshafiq.asyncimageloader.models.ServiceImageDownload;
 import com.hashimshafiq.asyncimageloader.utilities.ContentTypeServiceDownload;
-import com.hashimshafiq.pintrestdemo.R;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.DetailView;
+
+import javax.inject.Inject;
 
 public class DetailPresenterImplementation implements DetailPresenter {
 
@@ -16,19 +18,24 @@ public class DetailPresenterImplementation implements DetailPresenter {
     private Context context;
     private ContentTypeServiceDownload mProvider;
 
-    public DetailPresenterImplementation(DetailView detailView, Context context) {
-        this.detailView = detailView;
+    @Inject
+    Drawable placeHolderImage;
+
+
+    public DetailPresenterImplementation(Context context) {
+        this.detailView = null;
         this.context = context;
         this.mProvider = ContentTypeServiceDownload.Companion.getInstance();
     }
 
+
     @Override
     public void fetchPinImage(String imageURL) {
 
-            ServiceContentTypeDownload mDataTypeImageCancel = new ServiceImageDownload(imageURL, new ContentServiceObserver() {
+            ServiceContentTypeDownload serviceImageDownload = new ServiceImageDownload(imageURL, new ContentServiceObserver() {
                 @Override
                 public void onStart(ServiceContentTypeDownload mDownloadDataType) {
-                    detailView.displayPinImage(R.drawable.place_holder);
+                    detailView.displayPinImage(placeHolderImage);
                 }
 
                 @SuppressLint("DefaultLocale")
@@ -39,7 +46,7 @@ public class DetailPresenterImplementation implements DetailPresenter {
 
                 @Override
                 public void onFailure(ServiceContentTypeDownload mDownloadDataType, int statusCode, byte[] errorResponse, Throwable e) {
-                    detailView.displayPinImage(R.drawable.place_holder);
+                    detailView.displayPinImage(placeHolderImage);
                 }
 
                 @Override
@@ -47,7 +54,7 @@ public class DetailPresenterImplementation implements DetailPresenter {
 
                 }
             });
-            mProvider.getRequest(mDataTypeImageCancel);
+            mProvider.getRequest(serviceImageDownload);
 
 
 
@@ -56,10 +63,10 @@ public class DetailPresenterImplementation implements DetailPresenter {
 
     @Override
     public void fetchProfile(String name, String imageURL) {
-        ServiceContentTypeDownload mDataTypeImageCancel = new ServiceImageDownload(imageURL, new ContentServiceObserver() {
+        ServiceContentTypeDownload serviceImageDownload = new ServiceImageDownload(imageURL, new ContentServiceObserver() {
             @Override
             public void onStart(ServiceContentTypeDownload mDownloadDataType) {
-                detailView.displayProfile(name,R.drawable.place_holder);
+                detailView.displayProfile(name,placeHolderImage);
             }
 
             @SuppressLint("DefaultLocale")
@@ -70,7 +77,7 @@ public class DetailPresenterImplementation implements DetailPresenter {
 
             @Override
             public void onFailure(ServiceContentTypeDownload mDownloadDataType, int statusCode, byte[] errorResponse, Throwable e) {
-                detailView.displayProfile(name,R.drawable.place_holder);
+                detailView.displayProfile(name,placeHolderImage);
             }
 
             @Override
@@ -78,8 +85,13 @@ public class DetailPresenterImplementation implements DetailPresenter {
 
             }
         });
-        mProvider.getRequest(mDataTypeImageCancel);
+        mProvider.getRequest(serviceImageDownload);
 
 
+    }
+
+    @Override
+    public void setDetailView(DetailView detailView) {
+        this.detailView = detailView;
     }
 }
