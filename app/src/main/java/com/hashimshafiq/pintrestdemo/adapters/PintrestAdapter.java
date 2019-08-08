@@ -15,11 +15,12 @@ import com.hashimshafiq.pintrestdemo.listeners.PinClickListerner;
 import com.hashimshafiq.pintrestdemo.models.PinListResponse;
 import com.hashimshafiq.pintrestdemo.viewholders.PinViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PintrestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final ContentTypeServiceDownload mProvider;
+    private ContentTypeServiceDownload mProvider = null;
     private List<PinListResponse> mList;
     private PinClickListerner mPinClickListener;
 
@@ -27,6 +28,20 @@ public class PintrestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mList = list;
         mProvider = ContentTypeServiceDownload.Companion.getInstance();
         this.mPinClickListener = pinClickListerner;
+    }
+
+    public PintrestAdapter(){
+        mProvider = ContentTypeServiceDownload.Companion.getInstance();
+        mPinClickListener = null;
+        mList = new ArrayList<>();
+    }
+
+    public void setPinClickListener(PinClickListerner listener){
+        this.mPinClickListener = listener;
+    }
+
+    public void setList(List<PinListResponse> list){
+        this.mList = list;
     }
 
 

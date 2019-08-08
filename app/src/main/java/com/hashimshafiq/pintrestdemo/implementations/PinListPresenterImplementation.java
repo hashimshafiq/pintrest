@@ -2,6 +2,7 @@ package com.hashimshafiq.pintrestdemo.implementations;
 
 import android.content.Context;
 import android.os.Handler;
+import android.widget.ListView;
 import com.google.gson.Gson;
 import com.hashimshafiq.asyncimageloader.callback.ContentServiceObserver;
 import com.hashimshafiq.asyncimageloader.models.ServiceContentTypeDownload;
@@ -30,6 +31,16 @@ public class PinListPresenterImplementation implements PinListPresenter {
         this.mProvider = ContentTypeServiceDownload.Companion.getInstance();
         pins = new ArrayList<>();
     }
+
+    public PinListPresenterImplementation(){
+        this.listingView = null;
+        this.context = null;
+        this.mProvider = ContentTypeServiceDownload.Companion.getInstance();
+        pins = new ArrayList<>();
+
+    }
+
+
 
     @Override
     public void fetchPins() {
@@ -76,6 +87,18 @@ public class PinListPresenterImplementation implements PinListPresenter {
         });
         mProvider.getRequest(mDataTypeJson);
 
+    }
+
+    @Override
+    public void setListingView(PinListView listView) {
+        this.listingView = listView;
+    }
+
+
+
+    @Override
+    public void setContext(Context context) {
+        this.context = context;
     }
 
 

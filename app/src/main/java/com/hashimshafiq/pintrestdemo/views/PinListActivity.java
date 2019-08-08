@@ -12,7 +12,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.hashimshafiq.pintrestdemo.R;
 import com.hashimshafiq.pintrestdemo.adapters.PintrestAdapter;
-import com.hashimshafiq.pintrestdemo.implementations.PinListPresenterImplementation;
 import com.hashimshafiq.pintrestdemo.interfaces.PinListPresenter;
 import com.hashimshafiq.pintrestdemo.interfaces.PinListView;
 import com.hashimshafiq.pintrestdemo.listeners.PinClickListerner;
@@ -23,7 +22,6 @@ import com.hashimshafiq.pintrestdemo.utilities.SpacesItemDecoration;
 import dagger.android.AndroidInjection;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PinListActivity extends AppCompatActivity implements PinClickListerner, PinListView {
@@ -36,8 +34,18 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
 
     @Inject
     List<PinListResponse> mList;
+
+    @Inject
     PintrestAdapter adapter;
-    private PinListPresenter pinListPresenter;
+
+    @Inject
+    StaggeredGridLayoutManager manager;
+
+    @Inject
+    SpacesItemDecoration decoration;
+
+    @Inject
+    PinListPresenter pinListPresenter;
 
 
     @Override
@@ -46,15 +54,12 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
         setContentView(R.layout.activity_pin_list);
         ButterKnife.bind(this);
         AndroidInjection.inject(this);
-        //mList = new ArrayList<>();
         mProgressBar.setVisibility(View.VISIBLE);
-        pinListPresenter = new PinListPresenterImplementation(getApplicationContext(),this);
-
-        adapter = new PintrestAdapter(mList,this);
+        adapter.setPinClickListener(this);
+        pinListPresenter.setContext(getApplicationContext());
+        pinListPresenter.setListingView(this);
         mRecyclerView.setAdapter(adapter);
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
-        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         mRecyclerView.addItemDecoration(decoration);
         mProgressBar.setVisibility(View.VISIBLE);
         pinListPresenter.fetchPins();
@@ -63,14 +68,11 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
 
     @Override
     public void onClickPin(int position) {
-
         ImageUrlsResponse imageUrlsResponse = mList.get(position).getImageUrlsResponse();
         UserResponse userResponse = mList.get(position).getUser();
-
         Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
         intent.putExtra("user",userResponse);
         intent.putExtra("image",imageUrlsResponse);
-
         startActivity(intent);
     }
 
@@ -81,11 +83,9 @@ public class PinListActivity extends AppCompatActivity implements PinClickLister
 
     @Override
     public void displayPins(List<PinListResponse> pinListResponses) {
-
         mList.addAll(pinListResponses);
+        adapter.setList(mList);
         adapter.notifyDataSetChanged();
         mProgressBar.setVisibility(View.INVISIBLE);
-
-
     }
 }
