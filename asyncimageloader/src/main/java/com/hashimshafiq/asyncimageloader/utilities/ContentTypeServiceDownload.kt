@@ -1,14 +1,11 @@
 package com.hashimshafiq.asyncimageloader.utilities
 
-import android.widget.Toast
+
 import com.hashimshafiq.asyncimageloader.callback.ContentServiceObserver
 import com.hashimshafiq.asyncimageloader.callback.ContentServiceStatusObserver
 import com.hashimshafiq.asyncimageloader.models.ServiceContentTypeDownload
 import com.loopj.android.http.AsyncHttpClient
-
-
-import java.util.HashMap
-import java.util.LinkedList
+import java.util.*
 
 class ContentTypeServiceDownload private constructor() {
     private val allRequestsByKey = HashMap<String, LinkedList<ServiceContentTypeDownload>>()
