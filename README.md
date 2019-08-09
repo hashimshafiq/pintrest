@@ -5,9 +5,11 @@
 #### Assignemtn Part coded in JAVA
 
 
-### Libraries Used
-#### ButterKnife
-#### RecyclerView
-#### Dagger
-#### RxJava
-#### LoopJ
+* Libraries Used
+  * ButterKnife
+  * RecyclerView
+  * Dagger
+  * RxJava
+  * LoopJ
+  * CircleImageView
+  * Gson
