@@ -30,7 +30,6 @@ public class DetailModule {
     }
 
     @Provides
-    @Singleton
     List<String> provideStringList(){
         return new ArrayList<>();
     }
